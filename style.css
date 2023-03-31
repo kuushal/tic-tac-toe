@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+    background-color: black;
+    color: white;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    justify-content: center;
+    align-content: center;
+
+    justify-items: center;
+    align-items: center;
+
+    height: 100vh;
+}
+
+.box {
+    height: 100px;
+    width: 100px;
+}
+
+.placeholder1,
+.placeholder4,
+.placeholder7,
+.placeholder2,
+.placeholder5,
+.placeholder8 {
+    border-right: 0.25rem solid white;
+}
+
+.placeholder1,
+.placeholder2,
+.placeholder3,
+.placeholder4,
+.placeholder5,
+.placeholder6 {
+    border-bottom: 0.25rem solid white;
+}
