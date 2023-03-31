@@ -26,13 +26,16 @@ function GameBoard() {
     }
 
     const getBoard = () => _board;
+    const getAllBoxes = document.querySelectorAll('.box');
 
     const printBoard = () => {
         let output = "";
+        let k = 0;
         for (let i = 0; i < _board.length; i++) {
             let temp = ""
             for (let j = 0; j < _board[i].length; j++) {
                 temp += _board[i][j].getValue() + " ";
+                getAllBoxes[k++].textContent = _board[i][j].getValue();
             }
             output += temp;
             output += "\n";
@@ -60,6 +63,7 @@ function Cell() {
 // Controller
 function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
     const board = GameBoard();
+    let activePlayer = players[0];
 
 
     const players = [
@@ -73,7 +77,6 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         }
     ];
 
-    let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -114,7 +117,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             }
         }
 
-        if (!checkWinner(players[0].token) && !checkWinner(players[1].token) && isFull)
+        if (((!checkWinner(players[0].token)) && (!checkWinner(players[1].token))) && isFull)
             return true;
         else
             return false;
@@ -128,7 +131,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         if (isValidPosition) {
             switchPlayerTurn();
         }
-
+        printNewRound();
         // check if someone has won or not
         if (checkWinner(players[0].token)) {
             console.log("Player one has won!");
@@ -138,9 +141,10 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             return;
         }
         // check if there is tie
-        checkTie();
-
-        printNewRound();
+        if (checkTie()) {
+            console.log("Game is tie!");
+            return;
+        }
     };
 
     printNewRound();
