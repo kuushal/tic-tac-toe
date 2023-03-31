@@ -63,7 +63,6 @@ function Cell() {
 // Controller
 function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
     const board = GameBoard();
-    let activePlayer = players[0];
 
 
     const players = [
@@ -77,6 +76,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         }
     ];
 
+    let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -147,6 +147,21 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         }
     };
 
+    const attachEvents = () => {
+        const getAllBoxes = document.querySelectorAll('.box');
+
+        getAllBoxes.forEach(box => box.addEventListener('click', playRoundOnClick));
+    }
+
+    function playRoundOnClick(e) {
+        let row = Number(e.target.classList[1].charAt(0));
+        let col = Number(e.target.classList[1].charAt(1));
+
+        playRound(row, col);
+    }
+
+
+    attachEvents();
     printNewRound();
 
     return { playRound, getActivePlayer };
