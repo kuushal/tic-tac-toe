@@ -2,7 +2,7 @@
 function GameBoard() {
     const _row = 3;
     const _col = 3;
-
+    const getAllBoxes = document.querySelectorAll('.box');
     const _board = [];
 
     for (let i = 0; i < _row; i++) {
@@ -26,7 +26,7 @@ function GameBoard() {
     }
 
     const getBoard = () => _board;
-    const getAllBoxes = document.querySelectorAll('.box');
+
 
     const printBoard = () => {
         let output = "";
@@ -63,7 +63,9 @@ function Cell() {
 // Controller
 function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
     const board = GameBoard();
-
+    const resultSpan = document.querySelector('.results');
+    const getAllBoxes = document.querySelectorAll('.box');
+    const playAgainButton = document.querySelector('#play-again');
 
     const players = [
         {
@@ -87,6 +89,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     const printNewRound = () => {
         board.printBoard();
         console.log(`${getActivePlayer().name}'s turn`);
+        resultSpan.textContent = `${getActivePlayer().name}'s turn`;
     }
 
     const checkWinner = (token) => {
@@ -135,31 +138,42 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         // check if someone has won or not
         if (checkWinner(players[0].token)) {
             console.log("Player one has won!");
-            return;
+            resultSpan.textContent = "Player one has won!";
+            resultSpan.style.color = '#E9E8E8';
+            attachEvents();
         } else if (checkWinner(players[1].token)) {
             console.log("Player two has won!");
-            return;
+            resultSpan.textContent = "Player two has won!";
+            resultSpan.style.color = '#E9E8E8';
+            attachEvents();
         }
         // check if there is tie
         if (checkTie()) {
             console.log("Game is tie!");
-            return;
+            resultSpan.textContent = "Game is tie!";
+            attachEvents();
         }
     };
 
     const attachEvents = () => {
-        const getAllBoxes = document.querySelectorAll('.box');
-
-        getAllBoxes.forEach(box => box.addEventListener('click', playRoundOnClick));
+        getAllBoxes.forEach(box => box.addEventListener('click', playRoundOnClickHandler));
+        if (resultSpan.textContent.includes('won') || resultSpan.textContent.includes('tie')) {
+            getAllBoxes.forEach(box => box.removeEventListener('click', playRoundOnClickHandler));
+        }
+        playAgainButton.addEventListener('click', playAgainHandler);
     }
 
-    function playRoundOnClick(e) {
+    const playRoundOnClickHandler = (e) => {
         let row = Number(e.target.classList[1].charAt(0));
         let col = Number(e.target.classList[1].charAt(1));
 
         playRound(row, col);
     }
 
+    const playAgainHandler = () => {
+        window.location.reload();
+
+    }
 
     attachEvents();
     printNewRound();

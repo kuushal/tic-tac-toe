@@ -10,6 +10,15 @@ body {
     font-family: monospace;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    gap: 1rem
+}
+
 .container {
     display: grid;
     grid-template-columns: repeat(3, 100px);
@@ -20,7 +29,7 @@ body {
     justify-items: center;
     align-items: center;
 
-    height: 100vh;
+    height: 70vh;
 }
 
 .box {
@@ -52,4 +61,26 @@ body {
 .placeholder5,
 .placeholder6 {
     border-bottom: 0.25rem solid #E9E8E8;
+}
+
+h2 {
+    color: #E9E8E8;
+    font-size: 3.75rem;
+    /* margin-top: 1rem; */
+}
+
+.results {
+    font-weight: bold;
+    color: #913175;
+    font-size: 2.5rem;
+}
+
+button {
+    border: none;
+    padding: 1rem 1.5rem;
+    background-color: #CD5888;
+    color: #E9E8E8;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 12px;
 }
